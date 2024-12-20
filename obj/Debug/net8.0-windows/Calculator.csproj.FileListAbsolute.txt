@@ -25,11 +25,9 @@ C:\Users\zxczx\source\repos\Calculator\bin\Debug\net8.0-windows\Calculator.deps.
 C:\Users\zxczx\source\repos\Calculator\bin\Debug\net8.0-windows\Calculator.runtimeconfig.json
 C:\Users\zxczx\source\repos\Calculator\bin\Debug\net8.0-windows\Calculator.dll
 C:\Users\zxczx\source\repos\Calculator\bin\Debug\net8.0-windows\Calculator.pdb
-C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\HistoryWindow.g.cs
 C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\App.g.cs
 C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\Calculator_MarkupCompile.cache
 C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\Calculator_MarkupCompile.lref
-C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\HistoryWindow.baml
 C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\Calculator.g.resources
 C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\Calculator.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\zxczx\source\repos\Calculator\obj\Debug\net8.0-windows\Calculator.AssemblyInfoInputs.cache

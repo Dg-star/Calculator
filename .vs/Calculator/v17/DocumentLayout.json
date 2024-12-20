@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\zxczx\\source\\repos\\Calculator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\historywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:historywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\calculatorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:calculatorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\calculatorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:calculatorwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\historywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:historywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\calculator.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:calculator.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\calculatorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:calculatorwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|c:\\users\\zxczx\\source\\repos\\calculator\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8B9F1967-4793-4FC0-9504-63EFEFAB6CB4}|Calculator.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,14 +31,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "HistoryWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\zxczx\\source\\repos\\Calculator\\HistoryWindow.xaml",
-              "RelativeDocumentMoniker": "HistoryWindow.xaml",
-              "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\HistoryWindow.xaml",
-              "RelativeToolTip": "HistoryWindow.xaml",
+              "Title": "CalculatorWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\zxczx\\source\\repos\\Calculator\\CalculatorWindow.xaml",
+              "RelativeDocumentMoniker": "CalculatorWindow.xaml",
+              "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\CalculatorWindow.xaml",
+              "RelativeToolTip": "CalculatorWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-11-27T11:05:38.757Z",
+              "WhenOpened": "2024-11-27T08:30:03.685Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Calculator.csproj",
+              "DocumentMoniker": "C:\\Users\\zxczx\\source\\repos\\Calculator\\Calculator.csproj",
+              "RelativeDocumentMoniker": "Calculator.csproj",
+              "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\Calculator.csproj",
+              "RelativeToolTip": "Calculator.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-27T12:42:46.848Z"
             },
             {
               "$type": "Document",
@@ -48,34 +60,21 @@
               "RelativeDocumentMoniker": "CalculatorWindow.xaml.cs",
               "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\CalculatorWindow.xaml.cs",
               "RelativeToolTip": "CalculatorWindow.xaml.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAkwM4AAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwD4AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T08:30:07.028Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HistoryWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\zxczx\\source\\repos\\Calculator\\HistoryWindow.xaml.cs",
-              "RelativeDocumentMoniker": "HistoryWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\HistoryWindow.xaml.cs",
-              "RelativeToolTip": "HistoryWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T11:07:33.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CalculatorWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\zxczx\\source\\repos\\Calculator\\CalculatorWindow.xaml",
-              "RelativeDocumentMoniker": "CalculatorWindow.xaml",
-              "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\CalculatorWindow.xaml",
-              "RelativeToolTip": "CalculatorWindow.xaml",
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\zxczx\\source\\repos\\Calculator\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\zxczx\\source\\repos\\Calculator\\App.xaml",
+              "RelativeToolTip": "App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-11-27T08:30:03.685Z",
+              "WhenOpened": "2024-11-27T12:43:34.735Z",
               "EditorCaption": ""
             }
           ]

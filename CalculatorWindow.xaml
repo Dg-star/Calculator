@@ -8,19 +8,59 @@
         ResizeMode="NoResize"
         Icon="./Resourses/Calculator.ico"
         WindowStartupLocation="CenterScreen"
-        Title="Calculator" Height="300" Width="800" Background="White" Foreground="Black" Closing="Window_Closing" KeyDown="Window_KeyDown">
-    <Grid>
-        <TextBlock Height="30" Margin="100,0,600,206" VerticalAlignment="Bottom" FontSize="20">10</TextBlock>
-        <TextBox x:Name="TenthNumSysBox" Height="30" Margin="100,0,0,178" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" KeyDown="TenthNumSysBox_KeyDown"/>
-        <TextBlock Height="30" Margin="260,0,440,206" VerticalAlignment="Bottom" FontSize="20">2</TextBlock>
-        <TextBox x:Name="SecondNumSysBox" Height="30" Margin="260,0,0,178" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" KeyDown="SecondNumSysBox_KeyDown"/>
-        <TextBlock Height="30" Margin="420,0,280,206" VerticalAlignment="Bottom" FontSize="20">8</TextBlock>
-        <TextBox x:Name="EightNumSysBox" Height="30" Margin="420,0,0,178" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" KeyDown="EightNumSysBox_KeyDown"/>
-        <TextBlock Height="30" Margin="580,0,120,206" VerticalAlignment="Bottom" FontSize="20">16</TextBlock>
-        <TextBox x:Name="SixteenthNumSysBox" Height="30" Margin="580,0,0,178" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" KeyDown="SixteenthNumSysBox_KeyDown"/>
-        <Button x:Name="ResetButton" Height="25" Width="60" Content="Сбросить" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ResetButton_Click"/>
-        <Button x:Name="QuitButton" Width="100" Margin="10,0,0,10" Grid.RowSpan="2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Bottom" Background="Red" BorderBrush="Black" Foreground="White" FontSize="20" Content="Выйти" Click="QuitButton_Click"/>
-        <Button x:Name="CalculateButton" Width="150" Height="50" Margin="0,0,0,27" VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Вычислить " FontSize="20" Background="White" BorderBrush="Red" Click="CalculateButton_Click"/>
-        <Button x:Name="HistoryButton" Margin="0,0,10,10" HorizontalAlignment="Right" Width="100" Grid.RowSpan="2" Height="30" VerticalAlignment="Bottom" Background="#FFA0FF00" BorderBrush="#FFA0FF00" Foreground="Black" FontSize="20" Content="История" Click="HistoryButton_Click"/>
+        Title="Calculator" Height="600" Width="800" Background="White" Foreground="Black" Closing="Window_Closing" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+    <Grid Height="584" VerticalAlignment="Top">
+
+        <!-- Определяем строки и колонки для Grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Первая строка для кнопок -->
+            <RowDefinition Height="Auto"/>
+            <!-- Вторая строка для ввода -->
+            <RowDefinition Height="*"/>
+            <!-- Третья строка для поля истории -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Строка для TextBox'ов (ввод числа, баз) -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Height="60">
+            <!-- Текстовая подпись для TextBox Число -->
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Text="Число" HorizontalAlignment="Center" />
+                <TextBox x:Name="InputNumberBox" Height="30" Width="150" Margin="5" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </StackPanel>
+
+            <!-- Текстовая подпись для TextBox Из СИ -->
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Text="Из СИ" HorizontalAlignment="Center" />
+                <TextBox x:Name="InputBaseBox" Height="30" Width="50" Margin="5" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </StackPanel>
+
+            <!-- Текстовая подпись для TextBox В СИ -->
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Text="В СИ" HorizontalAlignment="Center" />
+                <TextBox x:Name="OutputBaseBox" Height="30" Width="50" Margin="5" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </StackPanel>
+
+            <!-- Текстовая подпись для TextBox Результат -->
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+                <TextBlock Text="Результат" HorizontalAlignment="Center" />
+                <TextBox x:Name="ResultBox" Height="30" Width="150" Margin="5" IsReadOnly="True" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Кнопки для сброса, вычисления и выхода -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Margin="10">
+            <Button x:Name="ResetButton" Height="25" Width="60" Content="Сбросить" Margin="5" Click="ResetButton_Click"/>
+            <Button x:Name="CalculateButton" Width="150" Height="50" Margin="5" Content="Вычислить" FontSize="20" Background="White" BorderBrush="Red" Click="CalculateButton_Click"/>
+            <Button x:Name="QuitButton" Width="100" Height="30" Margin="5" Content="Выйти" Background="Red" BorderBrush="Black" Foreground="White" FontSize="20" Click="QuitButton_Click"/>
+        </StackPanel>
+
+        <!-- Поле для истории -->
+        <TextBox x:Name="HistoryTextBox" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextWrapping="Wrap" FontSize="14" Margin="10,10,10,10" Height="234" Grid.Row="2"/>
+
     </Grid>
 </Window>

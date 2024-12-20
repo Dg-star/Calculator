@@ -1,13 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Calculator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class CalculatorWindow : Window
     {
         public CalculatorWindow()
@@ -15,121 +14,157 @@ namespace Calculator
             InitializeComponent();
         }
 
-        // Переменные для отслеживания нажатых клавиш
-        private bool isZPressed = false;
-
-        //
-        //Функция вычисления 10,2,8,16 систем счисления
-        //
-        private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        private void LoadHistory()
         {
-            CreateHistoryFile();
-            string TenthSys = TenthNumSysBox.Text;
-            string SecondSys = SecondNumSysBox.Text;
-            string EightSys = EightNumSysBox.Text;
-            string Sixteenth = SixteenthNumSysBox.Text;
-
-            //Открытие файла history.txt для записи истории
-            using (StreamWriter writer = new StreamWriter("history.txt", true))
+            try
             {
-                //Перевод из десятичной системы
-                if (long.TryParse(TenthSys, out long TenthNum))
-                {
-                    // Если введено число в десятичной системе, то переводим его в другие системы
-                    SecondNumSysBox.Text = Convert.ToString(TenthNum, 2); // Двоичная система
-                    EightNumSysBox.Text = Convert.ToString(TenthNum, 8);  // Восьмеричная система
-                    SixteenthNumSysBox.Text = Convert.ToString(TenthNum, 16).ToUpper(); // Шестнадцатеричная система
-                }
+                string historyFilePath = "history.txt";
 
-                //Перевод из двоичной системы
-                if (!string.IsNullOrEmpty(SecondSys) && IsBinary(SecondSys))
+                if (File.Exists(historyFilePath))
                 {
-                    try
-                    {
-                        long SecondNum = Convert.ToInt64(SecondSys, 2); // Преобразуем в long
-                                                                        // Если введено число в двоичной системе, то переводим его в другие системы
-                        TenthNumSysBox.Text = SecondNum.ToString(); // Десятичная система
-                        EightNumSysBox.Text = Convert.ToString(SecondNum, 8); // Восьмеричная система
-                        SixteenthNumSysBox.Text = Convert.ToString(SecondNum, 16).ToUpper(); // Шестнадцатеричная система
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("Ошибка: Некорректное значение для двоичной системы.");
-                    }
-                }
+                    // Читаем содержимое файла
+                    string historyContent = File.ReadAllText(historyFilePath);
 
-                //Перевод из восьмеричной системы
-                if (!string.IsNullOrEmpty(EightSys) && IsOctal(EightSys))
-                {
-                    try
-                    {
-                        long EightNum = Convert.ToInt64(EightSys, 8); // Преобразуем в long
-                                                                      // Если введено число в восьмеричной системе, то переводим его в другие системы
-                        TenthNumSysBox.Text = EightNum.ToString(); // Десятичная система
-                        SecondNumSysBox.Text = Convert.ToString(EightNum, 2); // Двоичная система
-                        SixteenthNumSysBox.Text = Convert.ToString(EightNum, 16).ToUpper(); // Шестнадцатеричная система
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("Ошибка: Некорректное значение для восьмеричной системы.");
-                    }
-                }
-
-                //Перевод из шестнадцатеричной системы
-                if (long.TryParse(Sixteenth, System.Globalization.NumberStyles.HexNumber, null, out long SixteenthNum))
-                {
-                    // Если введено число в шестнадцатеричной системе, то переводим его в другие системы
-                    TenthNumSysBox.Text = SixteenthNum.ToString(); // Десятичная система
-                    SecondNumSysBox.Text = Convert.ToString(SixteenthNum, 2); // Двоичная система
-                    EightNumSysBox.Text = Convert.ToString(SixteenthNum, 8); // Восьмеричная система
+                    // Отображаем содержимое в TextBox
+                    HistoryTextBox.Text = historyContent;
                 }
                 else
                 {
-                    Console.WriteLine("Ошибка перевода");
+                    HistoryTextBox.Text = "История пуста.";
                 }
-                //Запись в history.txt
-                writer.WriteLine($"Десятичное число: {TenthNumSysBox.Text}");
-                writer.WriteLine($"Двоичное число: {SecondNumSysBox.Text}");
-                writer.WriteLine($"Восьмеричное число: {EightNumSysBox.Text}");
-                writer.WriteLine($"Шестнадцатеричное число: {SixteenthNumSysBox.Text}");
-                writer.WriteLine("---------------------------------------");
-
-                Console.WriteLine($"Десятичное число: {TenthNumSysBox.Text}");
-                Console.WriteLine($"Двоичное число: {SecondNumSysBox.Text}");
-                Console.WriteLine($"Восьмеричное число: {EightNumSysBox.Text}");
-                Console.WriteLine($"Шестнадцатеричное число: {SixteenthNumSysBox.Text}");
-                Console.WriteLine("---------------------------------------");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке истории: {ex.Message}");
             }
         }
 
-        //Метод для проверки, является ли строка двоичным числом
-        private bool IsBinary(string value)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (char c in value)
+            LoadHistory();
+        }
+
+        // Функция для перевода числа между системами счисления
+        private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                if (c != '0' && c != '1') return false;
+                // Получаем входные значения
+                string inputNumber = InputNumberBox.Text;
+                int inputBase, outputBase;
+
+                // Проверяем, является ли входное основание числом и в пределах от 2 до 36
+                if (!int.TryParse(InputBaseBox.Text, out inputBase) || inputBase < 2)
+                {
+                    MessageBox.Show("Основание входной системы счисления должно быть числом больше или равно 2.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Проверяем, является ли выходное основание числом и в пределах от 2 до 36
+                if (!int.TryParse(OutputBaseBox.Text, out outputBase) || outputBase < 2)
+                {
+                    MessageBox.Show("Основание выходной системы счисления должно быть числом больше или равно 2.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Проверка корректности введенного числа для исходной системы счисления
+                if (!IsValidNumberInBase(inputNumber, inputBase))
+                {
+                    MessageBox.Show($"Число \"{inputNumber}\" не является допустимым в системе счисления с основанием {inputBase}.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Преобразуем число из входной системы в десятичную
+                long decimalValue = ConvertToDecimal(inputNumber, inputBase);
+
+                // Преобразуем число из десятичной системы в выходную систему счисления
+                string result = ConvertFromDecimal(decimalValue, outputBase);
+
+                // Выводим результат
+                ResultBox.Text = result;
+
+                // Записываем результат в файл истории
+                CreateHistoryFile(inputNumber, inputBase, outputBase, result);
+                LoadHistory();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Проверка, является ли число допустимым для заданной системы счисления
+        private bool IsValidNumberInBase(string number, int baseValue)
+        {
+            const string validChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string allowedChars = validChars.Substring(0, baseValue); // Формируем строку допустимых символов для данной системы счисления
+
+            foreach (char c in number.ToUpper())
+            {
+                if (!allowedChars.Contains(c)) // Проверяем, что символ из числа входит в допустимые для этой системы
+                {
+                    return false;
+                }
             }
             return true;
         }
 
-        //Метод для проверки, является ли строка восьмеричным числом
-        private bool IsOctal(string value)
+        // Преобразование числа из произвольной системы счисления в десятичную
+        private long ConvertToDecimal(string number, int fromBase)
         {
-            foreach (char c in value)
+            number = number.ToUpper();
+            long decimalValue = 0;
+            int power = 0;
+
+            // Читаем число справа налево
+            for (int i = number.Length - 1; i >= 0; i--)
             {
-                if (c < '0' || c > '7') return false;
+                char digitChar = number[i];
+                int digitValue = (digitChar >= '0' && digitChar <= '9') ? digitChar - '0' : digitChar - 'A' + 10;
+
+                if (digitValue >= fromBase)
+                {
+                    throw new FormatException($"Символ '{digitChar}' не допустим в системе счисления с основанием {fromBase}.");
+                }
+
+                decimalValue += digitValue * (long)Math.Pow(fromBase, power);
+                power++;
             }
-            return true;
+
+            return decimalValue;
         }
 
+        // Преобразование числа из десятичной системы в произвольную систему счисления
+        private string ConvertFromDecimal(long decimalValue, int toBase)
+        {
+            if (decimalValue == 0) return "0";
 
-        //Файл хранящий в себе историю вычислений с датой
+            StringBuilder result = new StringBuilder();
 
-        private void CreateHistoryFile()
+            while (decimalValue > 0)
+            {
+                int remainder = (int)(decimalValue % toBase);
+                result.Insert(0, (remainder < 10) ? (char)(remainder + '0') : (char)(remainder - 10 + 'A'));
+                decimalValue /= toBase;
+            }
+
+            return result.ToString();
+        }
+
+        // Обработчик для сброса полей
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            InputNumberBox.Clear();
+            InputBaseBox.Clear();
+            OutputBaseBox.Clear();
+            ResultBox.Clear();
+            Console.WriteLine("Сброс");
+        }
+
+        // Создание файла истории
+        private void CreateHistoryFile(string inputNumber, int inputBase, int outputBase, string result)
         {
             string filePath = "history.txt";
-
-            Console.WriteLine("Current Working Directory: " + Directory.GetCurrentDirectory());
 
             // Проверяем, существует ли файл
             if (!File.Exists(filePath))
@@ -139,158 +174,66 @@ namespace Calculator
                 {
                     writer.WriteLine("---- История вычислений ----");
                     writer.WriteLine($"     {DateTime.Now}");
-
                 }
             }
-            else
+
+            // Записываем данные о вычислениях в файл
+            using (StreamWriter writer = new StreamWriter(filePath, append: true))
             {
-                using (StreamWriter Datatime = new StreamWriter(filePath, append: true))
-                {
-                    Datatime.WriteLine($"     {DateTime.Now}");
-                }
-                
+                writer.WriteLine($"Число: {inputNumber}, Основание ввода: {inputBase}, Основание вывода: {outputBase}, Результат: {result}");
+            }
+        }
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Проверка, является ли символ русской буквой
+            if (IsRussianLetter(e.Text))
+            {
+                // Отклоняем ввод русской буквы
+                e.Handled = true;
             }
         }
 
+        private bool IsRussianLetter(string input)
+        {
+            // Проверка, является ли символ русским
+            return input.Any(c => (c >= 'А' && c <= 'Я') || (c >= 'а' && c <= 'я'));
+        }
 
-
-        //
-        //Вспомогатели ввода и кнопки
-        //
-        //Кнопка закрытия
+        // Обработчик для кнопки "Выйти"
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        //Открытие истории(скрытие текущего окна и отображение Истрории)
-        private void HistoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Hide();
-            HistoryWindow historyWindow = new();
-            historyWindow.Show();
-            Console.WriteLine("История открыта");
-            Console.WriteLine("---------------------------------------");
-        }
-
-        //Отслеживание события закрытия окна, если было закрыто то приложение ложится
+        // Обработчик закрытия окна
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-       //Ввод только чисел и backspace для 10 системы счисления
-        private void TenthNumSysBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Разрешаем клавишу Backspace
-            if (e.Key == Key.Back) { return; } // Разрешаем удаление символов
-
-            if (!char.IsDigit((char)KeyInterop.VirtualKeyFromKey(e.Key)))
-            {
-                // Блокируем все остальные клавиши если это не числа или backspace
-                e.Handled = true;
-            }
-        }
-
-        //Ввод только 0,1, backspace для 2 системы счисления
-        private void SecondNumSysBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Разрешаем клавишу Backspace
-            if (e.Key == Key.Back) { return; } // Разрешаем удаление символов
-
-            //Проверяем, является ли нажата клавиша  "0" "1" на основной клавиатуре или NumPad
-            if (e.Key == Key.D0 || e.Key == Key.NumPad0 || e.Key == Key.D1 || e.Key == Key.NumPad1)
-            {
-                return; //Разрешаем ввод символов "0" "1"
-            }
-
-            // Блокируем все остальные клавиши
-            e.Handled = true;
-        }
-
-        private void EightNumSysBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Разрешаем клавишу Backspace
-            if (e.Key == Key.Back) { return; } // Разрешаем удаление символов
-
-            //Проверяем, является ли нажата клавиша от "0" до "7" на основной клавиатуре
-            if (e.Key >= Key.D0 && e.Key <= Key.D7)
-            {
-                return; //Разрешаем ввод символов "0" до "7"
-            }
-
-            //Проверяем, является ли нажата клавиша от "0" до "7" на NumPad
-            if (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad7)
-            {
-                return; //Разрешаем ввод символов "0" до "7" на NumPad
-            }
-
-            //Блокируем все остальные клавиши
-            e.Handled = true;
-        }
-
-        private void SixteenthNumSysBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            // Разрешаем клавишу Backspace
-            if (e.Key == Key.Back) { return; } // Разрешаем удаление символов
-
-            //Проверяем, является ли нажата клавиша от "0" до "9" на основной клавиатуре
-            if (e.Key >= Key.D0 && e.Key < Key.D9)
-            {
-                return; //Разрешаем ввод символов "0" до "9"
-            }
-
-            //Проверяем, является ли нажата клавиша от "0" до "9" на NumPad
-            if (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad8)
-            {
-                return; //Разрешаем ввод символов "0" до "9" на NumPad
-            }
-
-            //Проверяем, является ли нажата клавиша от "A" до "F"
-            if ( e.Key >= Key.A && e.Key <= Key.F)
-            {
-                return; //Разрешаем ввод символов "A" до "F"
-            }
-
-            //Блокируем все остальные клавиши
-            e.Handled = true;
-        }
-
+        // Открытие консоли
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            // Проверяем, какие клавиши нажаты
-            if (e.Key == System.Windows.Input.Key.Z)
-            {
-                isZPressed = true;
-            }
-
-            if (isZPressed)
+            if (e.Key == Key.Z)
             {
                 OpenConsole();
             }
         }
+
+        // Открытие консоли
         private void OpenConsole()
         {
-            // Открытие консоли вручную
             AllocConsole();
             Console.WriteLine("Консоль открыта!");
-
-            // Сбрасываем флаги, чтобы не открывалась консоль снова при повторном нажатии этих клавиш
-            isZPressed = false;
         }
 
         // Импортируем функцию для открытия консоли
         [DllImport("kernel32.dll")]
         public static extern bool AllocConsole();
 
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        private void InputNumberBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            TenthNumSysBox.Text = "";
-            SecondNumSysBox.Text = "";
-            EightNumSysBox.Text = "";
-            SixteenthNumSysBox.Text = "";
-            Console.WriteLine("Сброс");
-            Console.WriteLine("---------------------------------------");
+
         }
     }
 }
